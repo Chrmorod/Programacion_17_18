@@ -351,6 +351,7 @@ public class Login extends JFrame {
 					String[] check = {boxNombre.getText(),boxApellidos.getText(),boxEdad.getText(),boxDificultad.getText()};
 					
 					if((check[0].length()!=0)&&(check[1].length()!=0)&&(check[2].length()!=0)&&(check[3].length()!=0)){
+					//Hacemos invisible la ventana Login y hacemos que aparezca la ventana Juego
 					referencia.setVisible(false);
 					game.setVisible(true);
 					}	
