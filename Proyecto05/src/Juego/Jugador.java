@@ -43,7 +43,7 @@ public class Jugador {
 	
 	public void setNombre(String nombre) {
 		if(nombre.length()==0){
-			setNombre("Se ha olvidado de escribir el nombre, por favor escribalo");
+			setNombre("Se ha olvidado escribir el nombre, por favor escribalo");
 		}else{
 			
 			this.nombre=nombre;
@@ -59,7 +59,7 @@ public class Jugador {
 	
 	public void setApellidos(String apellidos) {
 		if(apellidos.length()==0){
-			setApellidos("\nSe ha olvidado de escribir los apellidos, por favor escribalo");
+			setApellidos("\nSe ha olvidado escribir los apellidos, por favor escribalo");
 		}else{
 			this.apellidos = apellidos;	
 		}

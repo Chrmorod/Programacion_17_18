@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.JTextArea;
 import Juego.Jugador;
 public class Login extends JFrame {
@@ -58,7 +57,7 @@ public class Login extends JFrame {
 		
 		//La etiqueta game se asocia a Login.Será Visible a toda la clase.
 		game=g;
-		
+				
 		/*------ETIQUETAS------*/
 		
 		//Parametros ventana principal
@@ -200,7 +199,7 @@ public class Login extends JFrame {
 		boxPantalla.setText("BIENVENIDO AL JUEGO MATHDICE!");
 		boxPantalla.setBounds(10, 295, 482, 215);
 		contentPane.add(boxPantalla);
-		
+				
 		/*-----Caja Puntos----*/
 		
 		boxTiempo = new JTextField();
@@ -225,9 +224,8 @@ public class Login extends JFrame {
 		boxId.setBackground(Color.DARK_GRAY);
 		boxId.setBounds(496, 241, 161, 50);
 		contentPane.add(boxId);
-	
+				
 		/*------BOTONES------*/
-		
 		//Boton Jugar
 		
 		//Propiedades
@@ -240,7 +238,7 @@ public class Login extends JFrame {
 		contentPane.add(btnJugar);
 		
 		//Acciones del boton
-		
+
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
@@ -255,7 +253,7 @@ public class Login extends JFrame {
 					if(Character.isLetter(letra)){
 						sumletra=sumletra+letra;
 					}else{
-						sumletra="\nCaracteres invalidos en el nombe";
+						sumletra="\nCaracteres invalidos en el nombre ";
 						boxNombre.setText("");
 					}
 				}
@@ -264,20 +262,26 @@ public class Login extends JFrame {
 				player1.setNombre(sumletra);
 				
 				/*-----Asigna Apellidos----*/
-				
+				//String.valueOf(surname.charAt(0))!=" " && String.valueOf(surname.charAt(surname.length()))!=" "
 				String surname = boxApellidos.getText();
 				String sumletra2="";
 				
 				//Desglose del apellido y checkeo de que no haya algun caracter especial o numero
-				for(int i=0;i<surname.length();i++){
-					char letra2 = surname.charAt(i);
-					if(Character.isLetter(letra2)){
-						sumletra2=sumletra2+letra2;
-					}else{
-						sumletra2="\nCaracteres invalidos en los apellidos";
-						boxApellidos.setText("");
+					for(int i=0;i<surname.length();i++){
+						if((i==0&&Character.isWhitespace(surname.charAt(i))==true )|(Character.isWhitespace(surname.charAt(surname.length()-1))==true)){
+							sumletra2="\n Los apellidos no pueden empezar ni acabar por un espacio ";
+							boxApellidos.setText("");
+						}else{
+							char letra2 = surname.charAt(i);
+							if(Character.isLetter(letra2)|Character.isWhitespace(letra2)){
+								sumletra2=sumletra2+letra2;
+							}else{
+								sumletra2="\nCaracteres invalidos en el apellido";
+								boxApellidos.setText("");
+							}
+						}
 					}
-				}
+				
 				//En función de si tiene o no tiene un caracater especial o numero mostrara un mensaje distinto en pantalla
 				player1.setApellidos(sumletra2);
 				
@@ -285,7 +289,7 @@ public class Login extends JFrame {
 				
 				/*Comprobación de si es un texto o un numero*/
 				
-				//Si esto texto devolvera que no es un numero.
+				//Si esto es texto devolvera que no es un numero.
 				if(player1.isNumeric(boxEdad.getText())==false){
 					
 					player1.setEDAD("\nEsto no es un numero, introduzca un numero por favor.");
@@ -339,33 +343,20 @@ public class Login extends JFrame {
 			    	
 				boxPantalla.setText("Saludos!\n"+player1.getNombre()+" "+player1.getApellidos()+player1.getEDAD()+"\nHas elegido: "+player1.getDificultad()+" con lo que tendras "+player1.getMin()+" minutos");
 				
+				//Cargamos datos del Jugador player1
+				game.setJugador(player1);
+				
 				//Informa de que TODAS las cajas han sido completadas
 				
-					String[] revisar = {boxNombre.getText(),boxApellidos.getText(),boxEdad.getText(),boxDificultad.getText()};
+					String[] check = {boxNombre.getText(),boxApellidos.getText(),boxEdad.getText(),boxDificultad.getText()};
 					
-					if((revisar[0].length()!=0)&&(revisar[1].length()!=0)&&(revisar[2].length()!=0)&&(revisar[3].length()!=0)){
-					boxPantalla.setText("\nCAMPOS COMPLETADOS\nA JUGAR!\nCARGANDO....");
+					if((check[0].length()!=0)&&(check[1].length()!=0)&&(check[2].length()!=0)&&(check[3].length()!=0)){
+					referencia.setVisible(false);
+					game.setVisible(true);
+					}	
 					
-					game.setJugador(player1);
-				//Damos un tiempo de 2 segundos para entrar en la ventana del Juego.
-					Timer t = new Timer (2000, new ActionListener () 
-						{ 
-						    public void actionPerformed(ActionEvent e) 
-						    { 
-								
-								referencia.setVisible(false);//puede volver atras solo se hace invisible
-								//referencia.dispose();//destruye la referencia		
-								
-						    }
-					    
-					   });
-						t.start();
-						//Hacemos visible la ventana Juego
-						game.setVisible(true);
-					}				
 			}
 		});
-		
 		//Boton Ayuda
 		
 		//propiedades
