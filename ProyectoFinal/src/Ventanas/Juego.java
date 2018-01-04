@@ -331,9 +331,9 @@ public class Juego extends JFrame implements ActionListener{
 		int min=player1.getMin();//Introducimos los valores minutos seleccionados en Login
 		timeseg=seg;//Los declaramos en una variable private
 		timemin=min;//Los declaramos en una variable private
-		ts = new Timer(timeseg,this);//introducimos valores del tiempo
-		ts.start();//inicializamos el timer
-		getContentPane().add(boxTiempo);//añadimos al label tiempo.
+		ts = new Timer(1000,this);//introducimos valores del evento en el Timer
+		ts.start();//Inicializamos el timer
+		getContentPane().add(boxTiempo);//Añadimos al label tiempo.
 	}
 	
 	//Metodo para una tirada aleatoria.
@@ -416,15 +416,15 @@ public class Juego extends JFrame implements ActionListener{
 	//Dejamos un Thread.sleep(1000) que es lo que corresponde a 1 segundo (1000 milisegundos).
 	//Por ultimo cuando llegue a 0 segundo 0 minutos se parara el timer. Y se notificará de que el tiempo acabado tapando todos los dados y bloqueando todos los botones.
 	public void logic(){
-		try{
+		
 			if (timeseg>0){
-				Thread.sleep(1000);
 				timeseg--;
 				boxTiempo.setText(new DecimalFormat("00").format(timemin)+":"+new DecimalFormat("00").format(timeseg));
+				
 			}else if(timeseg==0&&timemin!=0){
-				Thread.sleep(1000);
 				timeseg=59;
 				timemin--;
+				
 			}else{
 				ts.stop();
 				contentPane.add(lblAvisofinJuego);//Avisamos del que el tiempo ha acabado por lo que bloqueamos los botones y tapamos imagenes y impedimos acciones con los Jlabel de las imagenes.
@@ -439,14 +439,9 @@ public class Juego extends JFrame implements ActionListener{
 				lblDado22.setIcon(dadoGris);
 				lblDado3.setIcon(dadoGris);
 				controlNumOpera=false;
-
-
+				boxOperaciones.setText("");
 				
 			}
-		}catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}	
 	}
 	
 	@Override
